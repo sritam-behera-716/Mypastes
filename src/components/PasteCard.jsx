@@ -1,11 +1,19 @@
 import { Calendar, Copy, Eye, PencilLine, Trash2 } from "lucide-react";
 import ActionButton from "./ActionButton";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { deletePaste } from "../redux/features/pasteSlice";
 
 const PasteCard = ({ paste }) => {
+  const dispatch = useDispatch();
+
   const handleCopy = () => {
     navigator.clipboard.writeText(paste.content);
     toast.success("Copied to clipboard");
+  };
+
+  const handleDelete = () => {
+    dispatch(deletePaste(paste.id));
   };
 
   return (
@@ -17,11 +25,7 @@ const PasteCard = ({ paste }) => {
         </h2>
 
         <div className="flex shrink-0 items-center gap-2">
-          <ActionButton 
-            icon={Eye}
-            title="View paste"
-            hoverColor="indigo"
-          />
+          <ActionButton icon={Eye} title="View paste" hoverColor="indigo" />
 
           <ActionButton
             icon={PencilLine}
@@ -40,6 +44,7 @@ const PasteCard = ({ paste }) => {
             icon={Trash2}
             title="Delete paste"
             hoverColor="red"
+            onClick={handleDelete}
           />
         </div>
       </div>

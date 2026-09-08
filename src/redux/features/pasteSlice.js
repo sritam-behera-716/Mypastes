@@ -18,7 +18,12 @@ export const pasteSlice = createSlice({
       toast.success("Paste created successfully");
     },
     updatePaste: (state, action) => {},
-    deletePaste: (state, action) => {},
+    deletePaste: (state, action) => {
+      const pasteId = action.payload;
+      state.pastes = state.pastes.filter((paste) => paste.id !== pasteId);
+      localStorage.setItem("pastes", JSON.stringify(state.pastes));
+      toast.success("Paste deleted successfully");
+    },
     deleteAllPaste: (state, action) => {},
   },
 });
