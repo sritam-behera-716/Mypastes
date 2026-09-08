@@ -3,9 +3,15 @@ import ActionButton from "./ActionButton";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { deletePaste } from "../redux/features/pasteSlice";
+import { useNavigate } from "react-router-dom";
 
 const PasteCard = ({ paste }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const handleView = () => {
+    navigate(`/pastes/${paste.id}`);
+  };
 
   const handleCopy = () => {
     navigator.clipboard.writeText(paste.content);
@@ -25,7 +31,12 @@ const PasteCard = ({ paste }) => {
         </h2>
 
         <div className="flex shrink-0 items-center gap-2">
-          <ActionButton icon={Eye} title="View paste" hoverColor="indigo" />
+          <ActionButton
+            icon={Eye}
+            title="View paste"
+            hoverColor="indigo"
+            onClick={handleView}
+          />
 
           <ActionButton
             icon={PencilLine}
