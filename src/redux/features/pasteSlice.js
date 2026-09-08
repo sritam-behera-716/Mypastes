@@ -17,14 +17,28 @@ export const pasteSlice = createSlice({
       localStorage.setItem("pastes", JSON.stringify(state.pastes));
       toast.success("Paste created successfully");
     },
-    updatePaste: (state, action) => {},
+    updatePaste: (state, action) => {
+      const updatedPaste = action.payload;
+
+      const index = state.pastes.findIndex(
+        (paste) => paste.id === updatedPaste.id,
+      );
+
+      if (index === -1) {
+        toast.error("Paste not found");
+        return;
+      }
+
+      state.pastes[index] = updatedPaste;
+      localStorage.setItem("pastes", JSON.stringify(state.pastes));
+      toast.success("Paste updated successfully");
+    },
     deletePaste: (state, action) => {
       const pasteId = action.payload;
       state.pastes = state.pastes.filter((paste) => paste.id !== pasteId);
       localStorage.setItem("pastes", JSON.stringify(state.pastes));
       toast.success("Paste deleted successfully");
     },
-    deleteAllPaste: (state, action) => {},
   },
 });
 

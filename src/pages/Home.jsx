@@ -1,38 +1,49 @@
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { addPaste } from "../redux/features/pasteSlice";
-import toast from "react-hot-toast";
+import { addPaste, updatePaste } from "../redux/features/pasteSlice";
+import { useSearchParams } from "react-router-dom";
+import { useEffect } from "react";
 
 const Home = () => {
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm();
 
   const pastes = useSelector((state) => state.paste.pastes);
   const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
+
+  const pasteId = searchParams.get("pasteId");
+
+  useEffect(() => {
+    const paste = pastes.find((pasteItem) => pasteItem.id === pasteId);
+
+    if (!paste) {
+      return;
+    }
+
+    setValue("title", paste.title || "");
+    setValue("content", paste.content || "");
+  }, [pasteId, pastes, setValue]);
 
   const onSubmit = (data) => {
     const paste = {
-      id: Date.now().toString(),
+      id: pasteId || Date.now().toString(),
       title: data.title,
       content: data.content,
       createdAt: new Date().toISOString(),
     };
 
-    const exist = pastes.find(
-      (pasteItem) =>
-        pasteItem.title.toLowerCase() === paste.title.toLowerCase(),
-    );
-
-    if (exist) {
-      toast.error("Paste already exists");
-      return;
+    if (pasteId) {
+      dispatch(updatePaste(paste));
+    } else {
+      dispatch(addPaste(paste));
     }
-
-    dispatch(addPaste(paste));
+    
     reset();
   };
 

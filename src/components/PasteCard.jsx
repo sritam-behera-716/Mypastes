@@ -13,6 +13,10 @@ const PasteCard = ({ paste }) => {
     navigate(`/pastes/${paste.id}`);
   };
 
+  const handleEdit = () => {
+    navigate(`/?pasteId=${paste.id}`)
+  }
+
   const handleCopy = () => {
     navigator.clipboard.writeText(paste.content);
     toast.success("Copied to clipboard");
@@ -42,6 +46,7 @@ const PasteCard = ({ paste }) => {
             icon={PencilLine}
             title="Edit paste"
             hoverColor="amber"
+            onClick={handleEdit}
           />
 
           <ActionButton
