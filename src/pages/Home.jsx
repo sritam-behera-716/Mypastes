@@ -52,7 +52,7 @@ const Home = () => {
       <div className="w-full max-w-3xl">
         <div className="mb-5 text-center">
           <h1 className="text-2xl font-bold text-slate-900 sm:text-3xl">
-            Create a Paste
+            {pasteId? "Update your Paste" : "Create a Paste"}
           </h1>
           <p className="mt-1 text-sm text-slate-500">
             Write, save and share your text easily.
@@ -128,7 +128,7 @@ const Home = () => {
               type="submit"
               className="w-full rounded-xl bg-indigo-600 px-5 py-3 font-medium text-white transition hover:bg-indigo-700 active:scale-[0.98]"
             >
-              Create My Paste
+              {pasteId? "Update Paste" : "Create My Paste"}
             </button>
           </form>
         </div>

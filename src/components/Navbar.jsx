@@ -5,7 +5,7 @@ const Navbar = () => {
     <nav className="h-16 shrink-0 border-b border-slate-200 bg-white px-4 shadow-sm">
       <div className="mx-auto flex h-full max-w-6xl items-center justify-between">
         <NavLink to="/" className="text-xl font-bold text-indigo-600">
-          MyPaste
+          MyPastes
         </NavLink>
 
         <div className="flex items-center gap-6">
