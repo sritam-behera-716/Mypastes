@@ -1,7 +1,13 @@
 import { Calendar, Copy, Eye, PencilLine, Trash2 } from "lucide-react";
 import ActionButton from "./ActionButton";
+import toast from "react-hot-toast";
 
 const PasteCard = ({ paste }) => {
+  const handleCopy = () => {
+    navigator.clipboard.writeText(paste.content);
+    toast.success("Copied to clipboard");
+  };
+
   return (
     <article className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-lg">
       {/* Header */}
@@ -27,6 +33,7 @@ const PasteCard = ({ paste }) => {
             icon={Copy}
             title="Copy paste"
             hoverColor="emerald"
+            onClick={handleCopy}
           />
 
           <ActionButton
